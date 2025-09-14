@@ -27,6 +27,8 @@ forecast = model.predict(future)
 #comp = model.plot_components(forecast)
 
 #creating vector of predictions
-pred = forecast["yhat"].values
+pred = forecast["yhat"].values[-744:]
 #or as a pandas series
 #pred = forecast.set_index("ds")["yhat"]
+
+pred
