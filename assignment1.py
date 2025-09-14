@@ -20,8 +20,13 @@ modelFit = model.fit(train)
 
 # creating timeline for 744 periods in the future (January 20xx) and generating predictions
 future = model.make_future_dataframe(periods=744)
-pred = model.predict(future)
+forecast = model.predict(future)
 
 #visualizing the forecast and components
-plt = model.plot(pred)
-comp = model.plot_components(pred)
+#plt = model.plot(forecast)
+#comp = model.plot_components(forecast)
+
+#creating vector of predictions
+pred = forecast["yhat"].values
+#or as a pandas series
+#pred = forecast.set_index("ds")["yhat"]
