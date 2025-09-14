@@ -15,20 +15,18 @@ train = train[['Timestamp', 'trips']].rename(columns={'Timestamp': 'ds', 'trips'
 train
 
 #creating and fitting the model
-model = Prophet(changepoint_prior_scale=0.5)
+model = Prophet(changepoint_prior_scale=0.1)
+model.add_seasonality(name='weekly', period=7, fourier_order=3)
+model.add_seasonality(name='daily', period=1, fourier_order=15)
 modelFit = model.fit(train)
 
 # creating timeline for 744 periods in the future (January 20xx) and generating predictions
-future = model.make_future_dataframe(periods=744)
+future = model.make_future_dataframe(periods=744, freq="h")
 forecast = model.predict(future)
 
 #visualizing the forecast and components
-#plt = model.plot(forecast)
-#comp = model.plot_components(forecast)
+plt = model.plot(forecast)
+comp = model.plot_components(forecast)
 
 #creating vector of predictions
 pred = forecast["yhat"].values[-744:]
-#or as a pandas series
-#pred = forecast.set_index("ds")["yhat"]
-
-pred
